@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "2d070d3b-0326-4b63-a8b8-b9982178a625",
+		"name": "CURRENCY_EXCHANGE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AUTHICATE_JWT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "af2dfb34-4353-4244-b265-3ea5e5e28c01",
+						"exec": [
+							"let responseData = JSON.parse(responseBody);",
+							"pm.environment.set(\"TOKEN_RETO\",responseData.jwtToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"walavo\",\n    \"password\": \"12334\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://walavo.tk/authentication",
+					"protocol": "http",
+					"host": [
+						"walavo",
+						"tk"
+					],
+					"path": [
+						"authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_ALL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fac05bf6-1438-4283-90a6-47b1cb4fb769",
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"find all currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(6).to.equal(jsonData.length); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_RETO}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://walavo.tk/api/v1/currency-exchange",
+					"protocol": "http",
+					"host": [
+						"walavo",
+						"tk"
+					],
+					"path": [
+						"api",
+						"v1",
+						"currency-exchange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "APPLY_CURRENCY_EXCHANGE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5d26fc8d-9753-4762-9160-0614de7316fe",
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"return currency exchange\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(5).to.equal(jsonData.amount); ",
+							"    pm.expect(jsonData.amount*jsonData.exchangeRate).to.equal(jsonData.exchangeRateAmount); ",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"return origin and destination currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(\"USD\").to.equal(jsonData.currencyOrigin); ",
+							"    pm.expect(\"PEN\").to.equal(jsonData.currencyDestination); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_RETO}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyOrigin\": \"USD\",\n    \"currencyDestination\": \"PEN\",\n    \"amount\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://walavo.tk/api/v1/currency-exchange",
+					"protocol": "http",
+					"host": [
+						"walavo",
+						"tk"
+					],
+					"path": [
+						"api",
+						"v1",
+						"currency-exchange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATEA_CURRENCY_EXCHANGE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4acb9840-ada8-4639-a843-e6d789d6f4ea",
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"return currency exchange update\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(3.50).to.equal(jsonData.amount); ",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"return origin and destination currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(\"USD\").to.equal(jsonData.currencyOrigin); ",
+							"    pm.expect(\"PEN\").to.equal(jsonData.currencyDestination); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN_RETO}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyOrigin\": \"USD\",\n    \"currencyDestination\": \"PEN\",\n    \"amount\": \"3.50\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://walavo.tk/api/v1/currency-exchange",
+					"protocol": "http",
+					"host": [
+						"walavo",
+						"tk"
+					],
+					"path": [
+						"api",
+						"v1",
+						"currency-exchange"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
