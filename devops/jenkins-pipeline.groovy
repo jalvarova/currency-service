@@ -1,22 +1,26 @@
 node {
     stage("Jenkins init pipeline") {
-        stage("build artifact")
     }
 
-    stage("get child repository") {
-        dir("checkout-directory") {
-            checkout([$class: "GitSCM", branches: [[name: "*/${env.REPO_BRANCH}"]],
-                      userRemoteConfigs: [[credentialsId: "CredencialGitLab", url: "${env.REPO_URL}"]]])
-        }
-        LOGBAK_XML = "${WORKSPACE}/checkout-directory/src/main/resources/logback.xml";
-    }
     def VERSION_TAG = 'SNAPSHOT'
     def JAR_FILE = "";
-    def imageName = ''
+    def imageName = ""
     def VERSION = "";
     def ARTIFACTID = "";
     def TARGET_REPO = "";
     def POSTMAN = "";
+
+    stage("get child repository") {
+        dir("checkout-directory") {
+            sh "ls -la"
+            sh "echo ${WORKSPACE}/checkout-directory"
+            sh "rm -rf ${WORKSPACE}/checkout-directory/*"
+
+            checkout([$class: "GitSCM", branches: [[name: "*/${env.REPO_BRANCH}"]],
+                      userRemoteConfigs: [[credentialsId: "CredencialGitLab", url: "${env.REPO_URL}"]]])
+        }
+    }
+
 
     stage("build artifact") {
 
@@ -33,37 +37,39 @@ node {
         }
 
         stage("test implementation postman") {
-            POSTMAN = "${env.APP_NAME.toUpperCase()}".concat(".postman_collection.json")
+            POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
             dir("checkout-directory") {
                 sh "newman run ${POSTMAN}"
             }
         }
+
         stage("build & push Docker Image") {
-            imageName = "javadevelop/currency-exchange/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
-            println(imageName)
-            withCredentials([
-                    [$class          : 'UsernamePasswordMultiBinding',
-                     credentialsId   : 'service-account-docker-hub',
-                     usernameVariable: 'USERNAME_DOCKERHUB', passwordVariable: 'PASS_DOCKERHUB']]) {
-                sh "docker login -u ${USERNAME_DOCKERHUB} --password ${PASS_DOCKERHUB}"
-                sh "docker build -t ${imageName} -f ."
+            dir("checkout-directory") {
+                imageName = "javadevelop/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
+                println(imageName)
+                sh "docker build -t ${imageName}  ."
                 sh "docker tag ${imageName} ${imageName}"
-                sh "docker push ${imageName}"
-                sh "docker images"
-                sh "docker logout"
+                withCredentials([
+                        [$class          : 'UsernamePasswordMultiBinding',
+                         credentialsId   : 'service-account-docker-hub',
+                         usernameVariable: 'USERNAME_DOCKERHUB', passwordVariable: 'PASS_DOCKERHUB']]) {
+                    sh "docker login -u ${USERNAME_DOCKERHUB} --password ${PASS_DOCKERHUB}"
+                    sh "env"
+                    //sh "docker push ${env.DOCKER_HUB}/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
+                    sh "docker images"
+                    sh "docker logout"
+                }
             }
         }
 
     }
     stage("Install container in VM") {
-        imageName = "javadevelop/currency-exchange/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
+        imageName = "javadevelop/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
         withCredentials([file(credentialsId: "service-account-compute", variable: "COMPUTE_CREDENTIALS")]) {
             sh("gcloud auth activate-service-account --key-file ${COMPUTE_CREDENTIALS}")
-            sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11"
-            sh "docker rm -f ${imageName}"
-            sh "docker pull ${imageName}"
-            sh "docker run -d --name ${env.APP_NAME} -p 80:9080 ${imageName}"
-            sh "exit"
+            sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker rm -f ${env.APP_NAME}'"
+            sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker pull ${imageName}'"
+            sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker run -d --name ${env.APP_NAME} -p 80:9080 ${imageName}'"
         }
     }
 }
