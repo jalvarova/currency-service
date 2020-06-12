@@ -16,7 +16,7 @@ node {
             sh "echo ${WORKSPACE}/checkout-directory"
             sh "rm -rf ${WORKSPACE}/checkout-directory/*"
 
-            checkout([$class: "GitSCM", branches: [[name: "*/${env.REPO_BRANCH}"]],
+            checkout([$class           : "GitSCM", branches: [[name: "*/${env.REPO_BRANCH}"]],
                       userRemoteConfigs: [[credentialsId: "CredencialGitLab", url: "${env.REPO_URL}"]]])
         }
     }
@@ -43,19 +43,6 @@ node {
             }
         }
 
-        stage("test implementation postman") {
-            POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
-            dir("checkout-directory") {
-                sh "newman run ${POSTMAN} --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
-            }
-        }
-
-        stage('Publish test postman') {
-            dir("checkout-directory") {
-                junit 'newman/report.xml'
-            }
-        }
-
         stage("build & push Docker Image") {
             dir("checkout-directory") {
                 imageName = "javadevelop/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
@@ -67,22 +54,45 @@ node {
                          credentialsId   : 'service-account-docker-hub',
                          usernameVariable: 'USERNAME_DOCKERHUB', passwordVariable: 'PASS_DOCKERHUB']]) {
                     sh "docker login -u ${USERNAME_DOCKERHUB} --password ${PASS_DOCKERHUB}"
-                    //sh "docker push ${env.DOCKER_HUB}/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
+                    sh "docker push ${env.DOCKER_HUB}/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
                     sh "docker logout"
                 }
             }
         }
 
     }
+
+    DOCKER_FOUND=''
     stage("Install container in VM") {
         imageName = "javadevelop/${ARTIFACTID}:${VERSION}-${VERSION_TAG}"
         withCredentials([file(credentialsId: "service-account-compute", variable: "COMPUTE_CREDENTIALS")]) {
+
             sh("gcloud auth activate-service-account --key-file ${COMPUTE_CREDENTIALS}")
-            sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker rm -f ${env.APP_NAME}'"
             sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker pull ${imageName}'"
+            DOCKER_FOUND = sh returnStdout: true, script: "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker ps' | grep ${env.APP_NAME}"
+            if(DOCKER_FOUND != null){
+                println(DOCKER_FOUND)
+                sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker rm -f ${env.APP_NAME}'"
+            }else{
+                println("Not Found image Docker ${env.APP_NAME}")
+            }
             sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker run -d --name ${env.APP_NAME} -p 80:9080 ${imageName}'"
             sh "gcloud compute ssh --zone us-central1-a challenge --project servicesmapa-11 --command='docker ps'"
 
+        }
+    }
+
+    stage("test implementation postman") {
+        POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
+        sleep 30
+        dir("checkout-directory") {
+            sh "newman run ${POSTMAN} --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
+        }
+    }
+
+    stage('Publish test postman') {
+        dir("checkout-directory") {
+            junit 'newman/report.xml'
         }
     }
 }

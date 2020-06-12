@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.irdigital.challenge</groupId>
     <artifactId>currency-exchange</artifactId>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
     <name>currency-exchange</name>
     <description>Challenge api currency exchange</description>
 
