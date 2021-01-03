@@ -1,5 +1,5 @@
 FROM openjdk:8
-RUN apt-get update && apt-get upgrade \
+RUN apt-get update \
 && apt-get install -y ca-certificates \
 && update-ca-certificates \
 # Change TimeZone
