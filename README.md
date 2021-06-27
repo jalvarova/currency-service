@@ -1,8 +1,8 @@
-#Currency Exchange
+# Currency Service
 Api que aplica el tipo de intercambio de moneda
 
 
-##Jenkins server
+## Jenkins server
 
 ```bash
 sudo apt-get update
@@ -13,7 +13,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose  version
 sudo vim jenkins.yml
 ```
-##  Install jenkins server
+## Install jenkins server
 
 ```bash
 docker-compose -f jenkins.yml up -d
@@ -42,39 +42,39 @@ docker exec -it jenkins sh -c "cat /var/jenkins_home/secrets/initialAdminPasswor
 
 [Jenkins](http://jenkins-walavo.duckdns.org/)
 
-#Run Docker images
+# Run Docker images
 
-###Login Docker Hub 
+### Login Docker Hub 
 ```bash
 docker login
 ```
 
-###Build 
+### Build 
 ```
 docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t currency-exchange
 ```
 
-###Images
+### Images
 ```bash
 docker images
 ```
 
-###Run 
+### Run 
 ```bash
 docker run -d --name currency-exchange-local -p 9080:8080 currency-exchange
 ```
 
-###Container 
+### Container 
 ```bash
 docker ps
 ```
 
-###Tag
+### Tag
 ```bash
 docker tag currency-exchange gcr.io/[PROJECT_ID]/currency-exchange:ARTIFACT_VERSION
 ```
 
-#Push Containet Registry GCP
+# Push Containet Registry GCP
 
 ```bash
 gcloud docker --  push gcr.io/[PROJECT_ID]/currency-exchange:ARTIFACT_VERSION
