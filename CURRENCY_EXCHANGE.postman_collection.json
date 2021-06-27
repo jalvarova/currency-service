@@ -1,0 +1,356 @@
+{
+	"info": {
+		"_postman_id": "07967149-8e17-4a6a-b90f-0623d05b9951",
+		"name": "CURRENCY_EXCHANGE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AUTHICATE_JWT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = JSON.parse(responseBody);",
+							"pm.environment.set(\"TOKEN\",responseData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"walavo\",\n    \"password\": \"12334\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/authentication",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_ALL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"find all currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(6).to.equal(jsonData.length); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/api/v1/currency-exchange",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"currency-exchange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "APPLY_CURRENCY_EXCHANGE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"return currency exchange\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(5).to.equal(jsonData.amount); ",
+							"    pm.expect(jsonData.amount*jsonData.exchangeRate).to.equal(jsonData.exchangeRateAmount); ",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"return origin and destination currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(\"USD\").to.equal(jsonData.currencyOrigin); ",
+							"    pm.expect(\"PEN\").to.equal(jsonData.currencyDestination); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyOrigin\": \"USD\",\n    \"currencyDestination\": \"PEN\",\n    \"amount\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/currency-exchange",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"currency-exchange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATEA_CURRENCY_EXCHANGE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"return currency exchange update\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(3.50).to.equal(jsonData.amount); ",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"return origin and destination currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(\"USD\").to.equal(jsonData.currencyOrigin); ",
+							"    pm.expect(\"PEN\").to.equal(jsonData.currencyDestination); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currencyOrigin\": \"USD\",\n    \"currencyDestination\": \"PEN\",\n    \"amount\": \"3.50\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/currency-exchange",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"currency-exchange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HEALTH",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"return currency exchange update\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(3.50).to.equal(jsonData.amount); ",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"return origin and destination currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(\"USD\").to.equal(jsonData.currencyOrigin); ",
+							"    pm.expect(\"PEN\").to.equal(jsonData.currencyDestination); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/health",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "METRICS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\", function () { ",
+							"    pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.test(\"return currency exchange update\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(3.50).to.equal(jsonData.amount); ",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"return origin and destination currency\", function () { ",
+							"    console.log(pm.response.json())",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(\"USD\").to.equal(jsonData.currencyOrigin); ",
+							"    pm.expect(\"PEN\").to.equal(jsonData.currencyDestination); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/metrics",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
