@@ -1,0 +1,42 @@
+server:
+  port: ${APPLICATION_PORT:9080}
+---
+info:
+  project:
+    version: 1.0.0
+---
+spring:
+  datasource:
+    url: jdbc:h2:mem:product-db
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 12345
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    scan: org.jalvarova.currency.repository.entity
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+        trace: false
+---
+management:
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        prometheus: /metrics
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - prometheus
+        exclude:
+---
+
