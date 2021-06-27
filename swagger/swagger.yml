@@ -1,0 +1,276 @@
+swagger: '2.0'
+info:
+  description: Servicio currency-exchange
+  version: 1.0.0
+  title: currency-exchange
+host: service-currency-exchange-wcyidxth5q-uc.a.run.app
+basePath: "/api/v1"
+tags:
+  - name: currency-exchange
+    description: Operation de cambio de moneda
+  - name: login
+    description: Login
+produces:
+  - application/json
+paths:
+  "/authentication":
+    post:
+      tags:
+        - login
+      summary: Aplicar tipo de cambio
+      operationId: authentication
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: body
+          required: false
+          schema:
+            $ref: "#/definitions/Login"
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/currency-exchange":
+    get:
+      tags:
+        - currency-exchange
+      summary: Cambio y tipo de moneda
+      operationId: getAllCurrencyExchange
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              $ref: "#/definitions/CurrencyExchange"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - currency-exchange
+      summary: Guardado Masivo tipo de cambio
+      operationId: saveAllCurrencyExchange
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: body
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CurrencyExchange"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/CurrencyExchange"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - currency-exchange
+      summary: Actualizar tipo de cambio
+      operationId: updateCurrencyExchange
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: body
+          required: false
+          schema:
+            $ref: "#/definitions/CurrencyExchangeUpdate"
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: "#/definitions/CurrencyExchangeUpdate"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/currency-exchange/apply":
+    post:
+      tags:
+        - currency-exchange
+      summary: Aplicar tipo de cambio
+      operationId: applyCurrencyExchange
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: body
+          required: false
+          schema:
+            $ref: "#/definitions/CurrencyExchange"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  "/health":
+    get:
+      tags:
+        - currency-exchange
+      summary: health
+      operationId: health
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: body
+          required: false
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: "OK"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  "/metrics":
+    get:
+      tags:
+        - currency-exchange
+      summary: metrics
+      operationId: metrics
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: body
+          required: false
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                names:
+                  type: string
+                  example: ""
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+security:
+  - APIKeyHeader: []
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: Authorization
+definitions:
+  Login:
+    type: object
+    properties:
+      username:
+        type: string
+        example: "walavo"
+      password:
+        type: string
+        example: "12334"
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+        example: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc5NTczNjQsImlhdCI6MTYxNzkzOTM2NH0.PE-V7CM251_Dk0NtqRDwq9Q5aSAIsGcJpZ8ucqdzl_2JQ7onAoRQ2Cx8H9w3rOJnvZskKyF-BDKYex-qWSdBXg"
+      refresh:
+        type: string
+        example: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc5NTczNjQsImlhdCI6MTYxNzkzOTM2NH0.PE-V7CM251_Dk0NtqRDwq9Q5aSAIsGcJpZ8ucqdzl_2JQ7onAoRQ2Cx8H9w3rOJnvZskKyF-BDKYex-qWSdBXg"
+  CurrencyExchange:
+    type: object
+    properties:
+      currencyOrigin:
+        type: string
+        example: "USD"
+      currencyDestination:
+        type: string
+        example: "PEN"
+      amount:
+        type: number
+        example: 5
+  CurrencyExchangeUpdate:
+    type: object
+    properties:
+      currencyOrigin:
+        type: string
+        example: "USD"
+      currencyDestination:
+        type: string
+        example: "PEN"
+      amount:
+        type: number
+        example: 3.50000
+  CurrencyExchangeApply:
+    type: object
+    properties:
+      currencyOrigin:
+        type: string
+        example: "USD"
+      currencyDestination:
+        type: string
+        example: "PEN"
+      amount:
+        type: number
+        example: 5
+      exchangeRateAmount:
+        type: number
+        example: 17.50000
+      exchangeRate:
+        type: number
+        example: 3.50000

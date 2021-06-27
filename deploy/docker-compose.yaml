@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  gcloud:
+    image: 'gcr.io/cloud-builders/gcloud-slim:latest'
+    volumes:
+      - type: bind
+        source: .
+        target: /pipeline
+    entrypoint: /pipeline/entrypoint.sh
+    command: /pipeline/deploy.sh
+    environment:
+      - PROJECT_ID=$PROJECT_ID
