@@ -1,4 +1,4 @@
-# Pipeline Jenkins With Deployment Cloud Run  
+# Pipeline Jenkins and Deployment Serverless Cloud Run
 
 ![arqhi](./img/arq.jpg)
 
@@ -93,7 +93,8 @@ docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdmin
 
 ## Postman Collection
 
-esta en el root del proyecto con el nombre: CURRENCY_EXCHANGE.postman_collection.json
+Root project postman collection: CURRENCY_EXCHANGE.postman_collection.json
+
 ![postman](./img/postman-test.png)
 
 ## CLIENT HTTP
