@@ -97,7 +97,7 @@ node {
         }
     }
 
-    stage("test implementation postman") {
+    stage("Test implementation postman") {
         POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
         sleep 30
         dir("checkout-directory") {

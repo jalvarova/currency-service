@@ -85,6 +85,8 @@ docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdmin
 
 ![jenkins](./img/execution-pipeline.png)
 
+![jenkins](./img/log-jenkins.png)
+
 [Jenkins Server](http://jenkins-wala.duckdns.org/)
 
 
