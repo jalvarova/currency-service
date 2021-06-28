@@ -1,5 +1,5 @@
 node {
-    stage("Jenkins init pipeline") {
+    stage("Jenkins Pipeline") {
     }
 
     def JAR_FILE = "";
@@ -8,7 +8,7 @@ node {
     def TARGET_REPO = "";
     def POSTMAN = "";
 
-    stage("get child repository") {
+    stage("Get child repository") {
         dir("checkout-directory") {
             sh "ls -la"
             sh "echo ${WORKSPACE}/checkout-directory"
@@ -20,19 +20,18 @@ node {
     }
 
 
-    stage("build artifact") {
+    stage("Build artifact") {
 
-        stage("build jar file") {
-            dir("checkout-directory/${env.SERVICE}") {
-                sh "./mvnw clean install -Dmaven.test.skip=false"
-                GROUPID = sh(script: "./mvnw help:evaluate -Dexpression=project.groupId -q -DforceStdout", returnStdout: true)
-                VERSION = sh(script: "./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true)
-                ARTIFACTID = sh(script: "./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout", returnStdout: true)
-            }
-            TARGET_REPO = "${WORKSPACE}/checkout-directory/${ARTIFACTID}"
-            JAR_FILE = "${TARGET_REPO}/target/${ARTIFACTID}-${VERSION}.jar"
-            println(JAR_FILE)
+        dir("checkout-directory/${env.SERVICE}") {
+            sh "./mvnw clean install -Dmaven.test.skip=false"
+            GROUPID = sh(script: "./mvnw help:evaluate -Dexpression=project.groupId -q -DforceStdout", returnStdout: true)
+            VERSION = sh(script: "./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true)
+            ARTIFACTID = sh(script: "./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout", returnStdout: true)
         }
+        TARGET_REPO = "${WORKSPACE}/checkout-directory/${ARTIFACTID}"
+        JAR_FILE = "${TARGET_REPO}/target/${ARTIFACTID}-${VERSION}.jar"
+        println(JAR_FILE)
+    }
 
 //        stage('Publish test results Junit') {
 //            dir("checkout-directory/${env.SERVICE}") {
@@ -40,7 +39,6 @@ node {
 //                archiveArtifacts 'target/*.jar'
 //            }
 //        }
-    }
 
     DOCKER_FOUND = ''
     withCredentials([file(credentialsId: "service-account-gcp", variable: "COMPUTE_CREDENTIALS")]) {
@@ -72,32 +70,33 @@ node {
 
         }
         dir("checkout-directory/swagger") {
+            def API_SWAGGER = "swagger-${env.SERVICE}:${VERSION}"
 
             stage('Publish Swagger Service') {
-                def API_SWAGGER = "swagger-${env.SERVICE}:${VERSION}"
                 sh("echo ${API_SWAGGER}")
                 stage("Build & push Docker Image Swagger") {
                     sh("docker build  . -t ${API_SWAGGER}")
                     sh("docker tag ${API_SWAGGER} gcr.io/${env.PROJECT_ID}/${API_SWAGGER}")
                     sh("gcloud docker --  push gcr.io/${env.PROJECT_ID}/${API_SWAGGER}")
                 }
-
-
-                stage("Deploy Cloud Run API Swagger") {
-                    sh("gcloud beta run deploy swagger-${env.SERVICE}" +
-                            " --image gcr.io/${env.PROJECT_ID}/${API_SWAGGER}" +
-                            " --platform managed " +
-                            " --allow-unauthenticated " +
-                            " --cpu=1 " +
-                            " --memory=512Mi " +
-                            " --region=us-central1" +
-                            " --project=${env.PROJECT_ID}" +
-                            " --service-account=${env.SERVICE_ACCOUNT}")
-
-                }
             }
+
+            stage("Deploy Cloud Run API Swagger") {
+                sh("gcloud beta run deploy swagger-${env.SERVICE}" +
+                        " --image gcr.io/${env.PROJECT_ID}/${API_SWAGGER}" +
+                        " --platform managed " +
+                        " --allow-unauthenticated " +
+                        " --cpu=1 " +
+                        " --memory=512Mi " +
+                        " --region=us-central1" +
+                        " --project=${env.PROJECT_ID}" +
+                        " --service-account=${env.SERVICE_ACCOUNT}")
+
+            }
+
         }
     }
+
     stage("test implementation postman") {
         POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
         sleep 30

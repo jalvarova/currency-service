@@ -1,132 +1,104 @@
-# Currency Service
-Api que aplica el tipo de intercambio de moneda
+# Pipeline Jenkins With Deployment Cloud Run  
+
+![arqhi](./img/arq.jpg)
 
 
-## Jenkins server
+# Run Docker images
 
+### Docker Build and Docker Run Images
 ```bash
-sudo apt-get update
-sudo apt install git
-sudo apt install curl -y
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-docker-compose  version
-sudo vim jenkins.yml
+$ docker login
+$ docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t currency-exchange:${ARTIFACT_VERSION}
+$ docker images
+$ docker run -d --name currency-exchange-local -p 8080:8080 currency-exchange:${ARTIFACT_VERSION}
+$ docker ps
+$ docker tag currency-exchange gcr.io/${PROJECT_ID}/currency-exchange:${ARTIFACT_VERSION}
 ```
-## Install jenkins server
-
-```bash
-docker-compose -f jenkins.yml up -d
-```
+## Build Swagger Local
 
 ```yaml
 version: '3.7'
 services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./swagger.yml:/api.yml
+    environment:
+      SWAGGER_JSON: /api.yml
+```
+
+#Docker delete image
+
+```bash
+docker rmi -f $(docker images 'api-swagger' -a -q)
+docker rmi -f $(docker images 'currency-exchange' -a -q)
+```
+
+## Install Package VM
+
+![arqhi](./img/jenkins-cloud-engine.jpg)
+
+```bash
+$ sudo apt-get update
+$ sudo apt install git
+$ sudo apt install curl -y
+$ sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo chmod +x /usr/local/bin/docker-compose
+$ docker-compose version
+$ docker-compose -f jenkins.yml up -d
+```
+
+## Jenkins Server
+```yaml
+version: '3.7'
+services:
   jenkins:
-    image: jenkins/jenkins:lts
+    image: javadevelop/jenkins-server
     privileged: true
     user: root
     ports:
       - 80:8080
       - 50000:50000
-    container_name: jenkins
+    container_name: jenkins_server
     volumes:
       - ~/tools/jenkins:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/local/bin/docker
+      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
 ```
-### Get password default jenkins
+
+### Get password default Jenkins
 ```bash
-docker exec -it jenkins sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
 ```
 
-[Jenkins](http://jenkins-wala.duckdns.org/)
+![jenkins](./img/jenkins.png)
 
-# Run Docker images
+![jenkins](./img/credentials.png)
 
-### Login Docker Hub 
-```bash
-docker login
-```
+![jenkins](./img/parameters.png)
 
-### Build 
-```
-docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t currency-exchange
-```
+![jenkins](./img/jenkins-pipeline.png)
 
-### Images
-```bash
-docker images
-```
+![jenkins](./img/execution-pipeline.png)
 
-### Run 
-```bash
-docker run -d --name currency-exchange-local -p 9080:8080 currency-exchange
-```
+[Jenkins Server](http://jenkins-wala.duckdns.org/)
 
-### Container 
-```bash
-docker ps
-```
 
-### Tag
-```bash
-docker tag currency-exchange gcr.io/[PROJECT_ID]/currency-exchange:ARTIFACT_VERSION
-```
 
-# Push Containet Registry GCP
+## Postman Collection
 
-```bash
-gcloud docker --  push gcr.io/[PROJECT_ID]/currency-exchange:ARTIFACT_VERSION
-```
-
-# Run Deploy Service API
-```bash
-gcloud beta run deploy service-currency-exchange
---image gcr.io/[PROJECT_ID]/currency-exchange:ARTIFACT_ID
---args ARTIFACT_ID=currency-exchange,ARTIFACT_VERSION=1.0.0,APPLICATION_PORT=8080 
---platform managed 
---allow-unauthenticated 
---cpu=1 
---memory=512Mi
---region=us-central1
---project=[PROJECT_ID]"
---[SERVICE_ACCOUNT]"
-```
-
-## Build Api Swagger
-
-```bash
-docker build  . -t api-swagger-v2:2.0.0
-docker tag api-swagger-v2:2.0.0 gcr.io/boxwood-valve-310104/api-swagger-v2:2.0.0
-gcloud docker --  push gcr.io/boxwood-valve-310104/api-swagger-v2:2.0.0
-```
-
-# Run Deploy API Swagger
-```bash
-gcloud beta run deploy service-api-swagger
---image gcr.io/[PROJECT_ID]/api-swagger-v2:2.0.0
---platform managed 
---allow-unauthenticated 
---cpu=1 
---memory=512Mi
---region=us-central1
---project=[PROJECT_ID]"
---[SERVICE_ACCOUNT]"
-```
-
-#Docker delete image
-docker rmi -f $(docker images 'currency-exchange' -a -q)
-
-##Postman Collection
 esta en el root del proyecto con el nombre: CURRENCY_EXCHANGE.postman_collection.json
-
+![postman](./img/postman-test.png)
 
 ## CLIENT HTTP
 
 ### Api Swagger
 
-[Swagger](https://service-api-swagger-wcyidxth5q-uc.a.run.app/)
+[Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
  
 #### LOGIN AUTH
 
@@ -194,7 +166,3 @@ curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a
 curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/metrics' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA'
 ```
-
-### Architecture Challenge
-
-![arqhi](./image/DEMO_CURRENCY_EXCHANGE.jpg)
