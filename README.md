@@ -30,7 +30,7 @@ services:
       SWAGGER_JSON: /api.yml
 ```
 
-#Docker delete image
+## Docker delete image
 
 ```bash
 docker rmi -f $(docker images 'api-swagger' -a -q)
