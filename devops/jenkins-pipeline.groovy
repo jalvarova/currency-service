@@ -34,12 +34,12 @@ node {
             println(JAR_FILE)
         }
 
-        stage('Publish test results Junit') {
-            dir("checkout-directory/${env.SERVICE}") {
-                junit 'target/surefire-reports/*.xml'
-                archiveArtifacts 'target/*.jar'
-            }
-        }
+//        stage('Publish test results Junit') {
+//            dir("checkout-directory/${env.SERVICE}") {
+//                junit 'target/surefire-reports/*.xml'
+//                archiveArtifacts 'target/*.jar'
+//            }
+//        }
     }
 
     DOCKER_FOUND = ''
@@ -98,17 +98,18 @@ node {
             }
         }
     }
-//    stage("test implementation postman") {
-//        POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
-//        sleep 30
-//        dir("checkout-directory") {
-//            sh "newman run ${POSTMAN} --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
-//        }
-//    }
-//
-//    stage('Publish test postman') {
-//        dir("checkout-directory") {
-//            junit 'newman/report.xml'
-//        }
-//    }
+    stage("test implementation postman") {
+        POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
+        sleep 30
+        dir("checkout-directory") {
+            sh "npm install -g newman"
+            sh "newman run ${POSTMAN} --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
+        }
+    }
+
+    stage('Publish test postman') {
+        dir("checkout-directory") {
+            junit 'newman/report.xml'
+        }
+    }
 }
