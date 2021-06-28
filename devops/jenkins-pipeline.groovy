@@ -34,12 +34,12 @@ node {
             println(JAR_FILE)
         }
 
-//        stage('Publish test results Junit') {
-//            dir("checkout-directory/${env.SERVICE}") {
-//                junit 'target/surefire-reports/*.xml'
-//                archiveArtifacts 'target/*.jar'
-//            }
-//        }
+        stage('Publish test results Junit') {
+            dir("checkout-directory/${env.SERVICE}") {
+                junit 'target/surefire-reports/*.xml'
+                archiveArtifacts 'target/*.jar'
+            }
+        }
     }
 
     DOCKER_FOUND = ''
