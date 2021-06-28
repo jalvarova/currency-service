@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   title: currency-exchange
 host: service-currency-exchange-wcyidxth5q-uc.a.run.app
-basePath: "/api/v1"
+basePath: "/"
 tags:
   - name: currency-exchange
     description: Operation de cambio de moneda
@@ -39,7 +39,7 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-  "/currency-exchange":
+  "/api/v1/currency-exchange":
     get:
       tags:
         - currency-exchange
@@ -116,7 +116,7 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-  "/currency-exchange/apply":
+  "/api/v1/currency-exchange/apply":
     post:
       tags:
         - currency-exchange
@@ -232,15 +232,24 @@ definitions:
       refresh:
         type: string
         example: "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc5NTczNjQsImlhdCI6MTYxNzkzOTM2NH0.PE-V7CM251_Dk0NtqRDwq9Q5aSAIsGcJpZ8ucqdzl_2JQ7onAoRQ2Cx8H9w3rOJnvZskKyF-BDKYex-qWSdBXg"
+      tokenType:
+        type: string
+        example: "Bearer "
   CurrencyExchange:
     type: object
     properties:
       currencyOrigin:
         type: string
         example: "USD"
+      nameOrigin:
+        type: string
+        example: "Dólar estadounidense"
       currencyDestination:
         type: string
         example: "PEN"
+      nameDestination:
+        type: string
+        example: "Nuevo sol"
       amount:
         type: number
         example: 5

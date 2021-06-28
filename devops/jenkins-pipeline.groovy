@@ -68,11 +68,36 @@ node {
                     " --memory=512Mi " +
                     " --region=us-central1" +
                     " --project=${env.PROJECT_ID}" +
-                    " --service-account=service-azure-devops")
+                    " --service-account=${env.SERVICE_ACCOUNT}")
 
         }
-    }
+        dir("checkout-directory/swagger") {
 
+            stage('Publish Swagger Service') {
+                def API_SWAGGER = "swagger-${env.SERVICE}:${VERSION}"
+                sh("echo ${API_SWAGGER}")
+                stage("Build & push Docker Image Swagger") {
+                    sh("docker build  . -t ${API_SWAGGER}")
+                    sh("docker tag ${API_SWAGGER} gcr.io/${env.PROJECT_ID}/${API_SWAGGER}")
+                    sh("gcloud docker --  push gcr.io/${env.PROJECT_ID}/${API_SWAGGER}")
+                }
+
+
+                stage("Install Cloud Run Service") {
+                    sh("gcloud beta run deploy swagger-${env.SERVICE}" +
+                            " --image gcr.io/${env.PROJECT_ID}/${API_SWAGGER}" +
+                            " --platform managed " +
+                            " --allow-unauthenticated " +
+                            " --cpu=1 " +
+                            " --memory=512Mi " +
+                            " --region=us-central1" +
+                            " --project=${env.PROJECT_ID}" +
+                            " --service-account=${env.SERVICE_ACCOUNT}")
+
+                }
+            }
+        }
+    }
 //    stage("test implementation postman") {
 //        POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
 //        sleep 30
