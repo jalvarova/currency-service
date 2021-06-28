@@ -40,7 +40,7 @@ services:
 docker exec -it jenkins sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
 ```
 
-[Jenkins](http://jenkins-walavo.duckdns.org/)
+[Jenkins](http://jenkins-wala.duckdns.org/)
 
 # Run Docker images
 

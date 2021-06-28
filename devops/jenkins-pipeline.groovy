@@ -58,7 +58,7 @@ node {
             }
         }
 
-        stage("Install Cloud Run Service") {
+        stage("Deploy Cloud Run Service") {
             sh("gcloud beta run deploy service-currency-exchange" +
                     " --image gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}" +
                     " --args ARTIFACT_ID=${ARTIFACTID},ARTIFACT_VERSION=${VERSION},APPLICATION_PORT=${env.APP_PORT} " +
@@ -83,7 +83,7 @@ node {
                 }
 
 
-                stage("Install Cloud Run Service") {
+                stage("Deploy Cloud Run API Swagger") {
                     sh("gcloud beta run deploy swagger-${env.SERVICE}" +
                             " --image gcr.io/${env.PROJECT_ID}/${API_SWAGGER}" +
                             " --platform managed " +
