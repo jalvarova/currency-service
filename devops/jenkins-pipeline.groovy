@@ -15,7 +15,7 @@ node {
             sh "rm -rf ${WORKSPACE}/checkout-directory/*"
             sh "env"
             checkout([$class           : "GitSCM", branches: [[name: "*/${env.REPO_BRANCH}"]],
-                      userRemoteConfigs: [[credentialsId: "azuredevops-walavo", url: "${env.REPO_URL}"]]])
+                      userRemoteConfigs: [[credentialsId: "github-account", url: "${env.REPO_URL}"]]])
         }
     }
 
