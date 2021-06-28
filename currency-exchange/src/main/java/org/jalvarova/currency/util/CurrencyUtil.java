@@ -1,6 +1,5 @@
 package org.jalvarova.currency.util;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.jalvarova.currency.exceptions.CurrencyExchangeNotFound;
 import org.jalvarova.currency.repository.entity.CurrencyCodeNames;
 import org.jalvarova.currency.repository.entity.CurrencyExchange;

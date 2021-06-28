@@ -28,9 +28,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    private final String HEADER = "Authorization";
-    private final String PREFIX = "Bearer ";
-    private final String PATH = "/authentication";
+    private static final String HEADER = "Authorization";
+    private static final String PREFIX = "Bearer ";
+    private static final String PATH = "/authentication";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {

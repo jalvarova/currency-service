@@ -11,7 +11,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +30,7 @@ public class UserController {
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
 
-    private final String PREFIX = "Bearer ";
+    private static final String PREFIX = "Bearer ";
 
     @PostMapping("/authentication")
     public JwtResponse login(@RequestBody @Valid JwtRequest jwtRequest) throws Exception {
