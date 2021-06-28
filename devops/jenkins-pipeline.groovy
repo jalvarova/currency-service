@@ -103,7 +103,7 @@ node {
         sleep 30
         dir("checkout-directory") {
             sh "npm install -g newman"
-            sh "newman run ${POSTMAN} --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
+            sh "newman run ${POSTMAN} -g api.postman_environment.json --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
         }
     }
 
