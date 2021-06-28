@@ -143,7 +143,7 @@ curl --location --request POST 'https://service-currency-exchange-wcyidxth5q-uc.
 
 ```bash
 curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/health' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc4Nzg4NDAsImlhdCI6MTYxNzg2MDg0MH0.9WxgXrdYx40YbjPO1cWYXQ8nti4IMoB2ZfEqv2Lo-fDXe8j86BlcmF4YXaewy-H74iJLDKVrB_ydSylEF_JfQQ'
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA'
 ```
 
 
@@ -155,11 +155,11 @@ curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a
 ```
 
 
-#### APPLY EXCHANGE CURRENCY
+#### APPLY CURRENCY EXCHANGE
 
 ```bash
-curl --location --request POST 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/api/v1/currency-exchange' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc4NzA5MjQsImlhdCI6MTYxNzg1MjkyNH0.FqiL-gt75wCE41wCh-b2V2djsgx0lQqrKkuzdMmgSgDXab8pzoRUkPTMp2H4D1zkR1UEWM3ORol6jzHwnpLfHw' \
+curl --location --request POST 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/api/v1/currency-exchange/apply' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "currencyOrigin": "USD",
@@ -168,23 +168,31 @@ curl --location --request POST 'https://service-currency-exchange-wcyidxth5q-uc.
 }'
 ```
 
-#### UPDATE EXCHANGE CURRENCY
+#### UPDATE CURRENCY EXCHANGE
 
 ```bash
-curl --location --request POST 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/api/v1/currency-exchange' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc4NzA5MjQsImlhdCI6MTYxNzg1MjkyNH0.FqiL-gt75wCE41wCh-b2V2djsgx0lQqrKkuzdMmgSgDXab8pzoRUkPTMp2H4D1zkR1UEWM3ORol6jzHwnpLfHw' \
+curl --location --request PUT 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/api/v1/currency-exchange' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "currencyOrigin": "USD",
     "currencyDestination": "PEN",
-    "amount": 5
+    "amount": "3.50"
 }'
 ```
-#### GET ALL EXCHANGE CURRENCY
+
+#### SAVE ALL CURRENCY EXCHANGE
 
 ```bash
-curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/api/v1/currency-exchange' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc5MDQwNjMsImlhdCI6MTYxNzg4NjA2M30.EK9MtPmlYKkNuLlXwF-3ga58ndzAnvcqS8Zhiu7Pmi7QtVBEEvIhoVEtyXfaOrt2RLA-NTy6V-eD4OY0soCvpg'
+curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/metrics' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA'
+```
+
+#### GET ALL CURRENCY EXCHANGE
+
+```bash
+curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a.run.app/metrics' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA'
 ```
 
 ### Architecture Challenge
