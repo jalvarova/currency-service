@@ -2,6 +2,7 @@ package org.jalvarova.currency.service;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.jalvarova.currency.dto.CurrencyExchangeDto;
 import org.jalvarova.currency.dto.CurrencyExchangeRsDto;
@@ -32,6 +33,7 @@ public class CurrencyExchangeService implements ICurrencyExchangeService {
         String currencyDestination = dto.getCurrencyDestination().name();
 
         return Single.fromCallable(() -> currencyExchangeRepository.findByApplyCurrency(currencyOrigin, currencyDestination))
+                .subscribeOn(Schedulers.io())
                 .onErrorReturnItem(CurrencyExchange.instanceEmpty())
                 .map(CurrencyUtil::validateNullCurrency)
                 .map(x -> toApiApply.apply(x, dto.getAmount()));
@@ -43,6 +45,7 @@ public class CurrencyExchangeService implements ICurrencyExchangeService {
         String currencyDestination = dto.getCurrencyDestination().name();
 
         return Single.fromCallable(() -> currencyExchangeRepository.findByApplyCurrency(currencyOrigin, currencyDestination))
+                .subscribeOn(Schedulers.io())
                 .onErrorReturnItem(CurrencyExchange.instanceEmpty())
                 .map(CurrencyUtil::validateNullCurrency)
                 .map(x -> toUpdateAmount.apply(x, dto.getAmount()))
@@ -53,6 +56,7 @@ public class CurrencyExchangeService implements ICurrencyExchangeService {
     @Override
     public Single<List<CurrencyExchangeDto>> getAllCurrencyExchange() {
         return Single.just(currencyExchangeRepository.findAll())
+                .subscribeOn(Schedulers.io())
                 .map(CurrencyUtil::validateNullCollection)
                 .flatMapObservable(Observable::fromIterable)
                 .map(currencyExchange -> toApiList.apply(currencyExchange, codeNamesService.findAll()))

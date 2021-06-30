@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static org.jalvarova.currency.util.JwtTokenUtil.*;
+
 @Validated
 @RestController
 public class UserController {
@@ -30,7 +32,6 @@ public class UserController {
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
 
-    private static final String PREFIX = "Bearer ";
 
     @PostMapping("/authentication")
     public JwtResponse login(@RequestBody @Valid JwtRequest jwtRequest) throws Exception {
@@ -38,10 +39,12 @@ public class UserController {
         authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
         final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
-
-        return new JwtResponse()
-                .jwt(token)
-                .tokenType(PREFIX);
+        return JwtResponse
+                .builder()
+                .token(token)
+                .refresh(token)
+                .tokenType(PREFIX)
+                .build();
 
     }
 

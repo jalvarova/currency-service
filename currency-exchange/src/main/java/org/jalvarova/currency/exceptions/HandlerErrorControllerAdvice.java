@@ -1,4 +1,4 @@
-package org.jalvarova.currency.util;
+package org.jalvarova.currency.exceptions;
 
 import org.jalvarova.currency.exceptions.CurrencyExchangeNotFound;
 import org.jalvarova.currency.exceptions.ErrorHandler;

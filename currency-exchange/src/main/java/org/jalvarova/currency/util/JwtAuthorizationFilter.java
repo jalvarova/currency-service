@@ -2,10 +2,13 @@ package org.jalvarova.currency.util;
 
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jalvarova.currency.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -51,7 +54,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             } else {
                 logger.error("JWT Token does not begin with Bearer String");
             }
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (StringUtils.isNotEmpty(username) && ObjectUtils.isEmpty(authentication)) {
                 UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
 
                 if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {

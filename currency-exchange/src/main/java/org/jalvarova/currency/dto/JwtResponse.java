@@ -1,14 +1,12 @@
 package org.jalvarova.currency.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
 @JsonPropertyOrder(value = {"tokenType", "token", "refresh"})
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
