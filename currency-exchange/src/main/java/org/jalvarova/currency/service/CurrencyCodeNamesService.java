@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class CurrencyCodeNamesServiceService implements ICurrencyCodeNamesService {
+public class CurrencyCodeNamesService implements ICurrencyCodeNamesService {
 
     @Autowired
     private CurrencyCodeNamesRepository codeNamesRepository;

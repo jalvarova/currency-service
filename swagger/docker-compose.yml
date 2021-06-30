@@ -6,6 +6,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./swagger.yml:/api.yml
+      - ./api.yml:/api.yml
     environment:
       SWAGGER_JSON: /api.yml

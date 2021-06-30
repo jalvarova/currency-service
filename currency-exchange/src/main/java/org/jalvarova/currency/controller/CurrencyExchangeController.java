@@ -43,5 +43,4 @@ public class CurrencyExchangeController {
         return currencyExchangeService.saveExchangeRate(request);
     }
 
-
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @FunctionalInterface
 public interface CurrencyMapper {
 
-    void hello();
+    void demo();
 
     Function<CurrencyExchange, CurrencyExchangeDto> toApi = (CurrencyExchange entity) ->
             CurrencyExchangeDto
