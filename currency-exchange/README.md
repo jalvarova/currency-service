@@ -328,11 +328,11 @@ Postman collection of the root project: CURRENCY_EXCHANGE.postman_collection.jso
 
 ### Next step :exclamation::exclamation::exclamation:
 
-    :ballot_box_with_check: Deploy Cloud Run Serveless
+:ballot_box_with_check: Deploy Cloud Run Serveless
 
-    :ballot_box_with_check: Create Pipiline CI/CD with Jenkins
+:ballot_box_with_check: Create Pipiline CI/CD with Jenkins
 
-    :ballot_box_with_check: Testing Apí with Postman and Newman
+:ballot_box_with_check: Testing Apí with Postman and Newman
 
 ### Conclusions
 
