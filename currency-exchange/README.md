@@ -21,11 +21,11 @@ example:
  
 **Previous knowledge**
 
-  * Docker
-  * Spring Boot
-  * RESTful API
-  * Swagger
-  * Postman
+  :radio_button: Docker
+  :radio_button: Spring Boot
+  :radio_button: RESTful API
+  :radio_button: Swagger
+  :radio_button: Postman
 
 **Structure Project**
  
@@ -326,7 +326,7 @@ Postman collection of the root project: CURRENCY_EXCHANGE.postman_collection.jso
 
 ![postman](../img/postman-test.png)
 
-### Next step!!! 
+### Next step :exclamation::exclamation::exclamation:
 
     * Deploy Cloud Run Serveless
 
@@ -338,14 +338,14 @@ Postman collection of the root project: CURRENCY_EXCHANGE.postman_collection.jso
 
 We've seen in these examples, the creation of microservices with Spring Boot, simple development with functional programming and
 how to containerize our REST API quickly and easily. In the following steps, we'll see how to deploy the microservice,
-with a pipeline that will delivery in Cloud Run, and then test it with Newman.
+with a pipeline that will delivery in Cloud Run :+1:, and then test it with Newman.
 
 ## References
 
-| Concepts                                                                                   | Approved      |
-|--------------------------------------------------------------------------------------------|---------------|
-| [Functional Programming](https://www.geeksforgeeks.org/functional-interfaces-java/)        | ✅             |
-| [Docker Container](https://docs.docker.com/engine/reference/commandline/container/)        | ✅             |
-| [Spring Boot API REST](https://spring.io/projects/spring-hateoas)                          | ✅             |
-| [Swagger Specification](https://swagger.io/specification/v2/)                              | ✅             |
-| [Podtman Collection](https://www.postman.com/collection/)                                  | ✅             |
+| Concepts                                                                                   |              Approved            |
+|--------------------------------------------------------------------------------------------|----------------------------------|
+| [Functional Programming](https://www.geeksforgeeks.org/functional-interfaces-java/)        |          :heavy_check_mark:      |
+| [Docker Container](https://docs.docker.com/engine/reference/commandline/container/)        |          :heavy_check_mark:      |
+| [Spring Boot API REST](https://spring.io/projects/spring-hateoas)                          |          :heavy_check_mark:      |
+| [Swagger Specification](https://swagger.io/specification/v2/)                              |          :heavy_check_mark:      |
+| [Podtman Collection](https://www.postman.com/collection/)                                  |          :heavy_check_mark:      |
