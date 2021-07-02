@@ -306,7 +306,7 @@ $ docker tag currency-exchange gcr.io/${PROJECT_ID}/currency-exchange:${ARTIFACT
 127.0.0.1:8080
 ```
 
-## Docker delete image
+## Docker delete image :warning:
 ```bash
 docker rmi -f $(docker images 'api-swagger' -a -q)
 docker rmi -f $(docker images 'currency-exchange' -a -q)
