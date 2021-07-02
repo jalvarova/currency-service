@@ -3,39 +3,6 @@
 ![arqhi](./img/arq.jpg)
 
 
-# Run Docker images
-
-### Docker Build and Docker Run Images
-```bash
-$ docker login
-$ docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t currency-exchange:${ARTIFACT_VERSION}
-$ docker images
-$ docker run -d --name currency-exchange-local -p 8080:8080 currency-exchange:${ARTIFACT_VERSION}
-$ docker ps
-$ docker tag currency-exchange gcr.io/${PROJECT_ID}/currency-exchange:${ARTIFACT_VERSION}
-```
-## Build Swagger Local
-
-```yaml
-version: '3.7'
-services:
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    container_name: "swagger-ui"
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./swagger.yml:/api.yml
-    environment:
-      SWAGGER_JSON: /api.yml
-```
-
-## Docker delete image
-
-```bash
-docker rmi -f $(docker images 'api-swagger' -a -q)
-docker rmi -f $(docker images 'currency-exchange' -a -q)
-```
 
 ## Install Package VM
 
@@ -89,20 +56,17 @@ docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdmin
 
 [Jenkins Server](http://jenkins-wala.duckdns.org/)
 
-
-
-## Postman Collection
-
-Root project postman collection: CURRENCY_EXCHANGE.postman_collection.json
+## Postman Running Testing
 
 ![postman](./img/postman-test.png)
 
-## CLIENT HTTP
 
 ### Api Swagger
 
 [Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
  
+## CLIENT HTTP
+
 #### LOGIN AUTH
 
 ```bash
