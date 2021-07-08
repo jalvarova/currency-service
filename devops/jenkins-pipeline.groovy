@@ -39,6 +39,7 @@ node {
         stage("Auth Login GCP") {
             sh("gcloud auth activate-service-account --key-file ${COMPUTE_CREDENTIALS}")
             sh("gcloud auth configure-docker")
+            sh("docker-credential-gcloud list")
         }
 
         stage("Build & push Docker Image") {
