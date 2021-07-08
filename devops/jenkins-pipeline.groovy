@@ -38,11 +38,11 @@ node {
 
         stage("Auth Login GCP") {
             sh("gcloud auth activate-service-account --key-file ${COMPUTE_CREDENTIALS}")
+            sh("gcloud auth configure-docker")
         }
 
         stage("Build & push Docker Image") {
             dir("checkout-directory/${env.SERVICE}") {
-                sh("gcloud auth configure-docker")
                 sh("docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t ${ARTIFACTID}:${VERSION}")
                 sh("docker images")
                 sh("docker tag ${ARTIFACTID}:${VERSION} gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
