@@ -19,6 +19,7 @@ gcloud services list --available
 gcloud services enable compute.googleapis.com
 gcloud services enable run.googleapis.com
 gcloud services enable containerregistry.googleapis.com
+gcloud services enable artifactregistry.googleapis.com
 gcloud services enable storage-component.googleapis.com
 ```
 
