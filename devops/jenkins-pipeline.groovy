@@ -43,7 +43,7 @@ node {
             dir("checkout-directory/${env.SERVICE}") {
 
                 sh("gcloud auth activate-service-account ${env.ACCOUNT_EMAIL} --key-file ${COMPUTE_CREDENTIALS}")
-                sh("gcloud auth configure-docker us.gcr.io -q")
+                sh("gcloud auth configure-docker gcr.io -q")
                 sh("docker-credential-gcloud list")
 
                 sh("docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t ${ARTIFACTID}:${VERSION}")
