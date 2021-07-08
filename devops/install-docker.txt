@@ -98,7 +98,7 @@ sudo apt-get install apt-transport-https ca-certificates curl software-propertie
 
 # Iniciarlo con el sistema
 
-sudo apt-get install docker-ce
+sudo systemctl enable docker
 
 # Agregar usuario al grupo docker
 

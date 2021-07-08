@@ -33,13 +33,6 @@ node {
         println(JAR_FILE)
     }
 
-//        stage('Publish test results Junit') {
-//            dir("checkout-directory/${env.SERVICE}") {
-//                junit 'target/surefire-reports/*.xml'
-//                archiveArtifacts 'target/*.jar'
-//            }
-//        }
-
     DOCKER_FOUND = ''
     withCredentials([file(credentialsId: "service-account-gcp", variable: "COMPUTE_CREDENTIALS")]) {
 
@@ -49,10 +42,12 @@ node {
 
         stage("Build & push Docker Image") {
             dir("checkout-directory/${env.SERVICE}") {
+                sh("gcloud auth configure-docker")
                 sh("docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t ${ARTIFACTID}:${VERSION}")
                 sh("docker images")
                 sh("docker tag ${ARTIFACTID}:${VERSION} gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
-                sh("gcloud docker --  push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
+                //sh("gcloud docker --  push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
+                sh("docker push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
             }
         }
 
