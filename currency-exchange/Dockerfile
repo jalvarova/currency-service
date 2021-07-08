@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM adoptopenjdk/openjdk8
 
 ENV ARTIFACT_ID=currency-exchange
 ENV ARTIFACT_VERSION=1.0.0
