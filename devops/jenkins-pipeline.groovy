@@ -38,8 +38,6 @@ node {
 
         stage("Auth Login GCP") {
             sh("gcloud auth activate-service-account --key-file ${COMPUTE_CREDENTIALS}")
-            sh("gcloud auth configure-docker")
-            sh("docker-credential-gcloud list")
         }
 
         stage("Build & push Docker Image") {
@@ -48,6 +46,8 @@ node {
                 sh("docker images")
                 sh("docker tag ${ARTIFACTID}:${VERSION} gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
                 //sh("gcloud docker --  push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
+                sh("gcloud auth configure-docker -q")
+                sh("docker-credential-gcloud list")
                 sh("docker push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
             }
         }
