@@ -50,7 +50,7 @@ node {
                 sh("docker images")
                 sh("docker tag ${ARTIFACTID}:${VERSION} gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
                 //sh("gcloud docker --  push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
-                sh("gcloud docker push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
+                sh("gcloud docker -- push gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
             }
         }
 
