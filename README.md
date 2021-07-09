@@ -1,18 +1,29 @@
 # Pipeline Jenkins and Deployment Serverless Cloud Run Part II
 
+In this part we will do the Jenkins server provisioning with Compunte Engine, and we'll build a pipeline to delivery the microservice in Cloud Run, 
+going through testing with newman and publishing the API contract with Open API.
+
 ![arqhi](./img/arq.jpg)
 
-> We are going to access the GCP console with the account created Google
+
+# Pre requirements
+
+* [Cloud SDK Install](https://cloud.google.com/sdk/docs/quickstart)
+
+* [Gcloud auth login](https://cloud.google.com/sdk/gcloud/reference/auth/login)
+
+We have to create a project on Google Cloud Platform, we'll enable some services to use in our example.
+
+#### Create project in GCP
 
 ```bash
 gcloud auth login
-gcloud projects list
 gcloud projects create ${PROJECT_ID}
+gcloud projects list
 gcloud config set project ${PROJECT_ID}
 ```
 
-
-#Enabled services in GCP
+#### Enabled services in GCP
 
 ```bash
 gcloud services list --available
@@ -23,34 +34,59 @@ gcloud services enable artifactregistry.googleapis.com
 gcloud services enable storage-component.googleapis.com
 ```
 
+## Provisioning Jenkins Server 
+
+Now let's create the virtual machine on Compute Engine for provisioning a Jenkins Server.
+
 ```bash
 gcloud compute zones list
 gcloud compute disk-types list
 gcloud compute images list
 
-gcloud compute instances create jenkins-server --zone=us-central1-a --machine-type=e2-medium --image-family=ubuntu-2004-lts  --image-project=ubuntu-os-cloud --boot-disk-size=20GB  --tags=https-server,http-server,allow-internet-access --service-account=${SERVICE-ACCOUNT} --preemptible --no-restart-on-failure  --maintenance-policy=terminate
-
-gcloud beta compute machine-images create jenkins-server-backup --source-instance=jenkins-server --source-instance-zone=us-central1-a
-
-gcloud compute instances delete jenkins-server --zone=us-central1-a
+gcloud compute instances create jenkins-server 
+    --zone=us-central1-a 
+    --machine-type=e2-medium 
+    --image-family=ubuntu-2004-lts  
+    --image-project=ubuntu-os-cloud 
+    --boot-disk-size=20GB  
+    --tags=https-server,http-server,allow-internet-access 
+    --service-account=${SERVICE-ACCOUNT} 
+    --preemptible 
+    --no-restart-on-failure  
+    --maintenance-policy=terminate
 ```
 
-## Install Package VM
+![arqi](./img/vm-jenkins.png)
 
-![arqhi](./img/jenkins-cloud-engine.jpg)
+## Install Package in VM
+
+Install the following packages on the virtual machine that are necessary to start installing Jenkins.
 
 ```bash
-$ sudo apt-get update
+$ sudo apt-get update -y
 $ sudo apt-get install git -y && sudo apt-get install curl -y 
+```
+## Getting started Jenkins install :+1:
+
+Install Docker according to the Linux distribution of the VM.
+
+:file_folder: ./devops/install-docker.txt
+
+#### Installing Docker compose
+
+```bash
 $ sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 $ sudo chmod +x /usr/local/bin/docker-compose
 $ docker-compose version
 ```
 
+Create file with jenkins image definition.
+
 ```bash
 $ sudo vim jenkins.yaml
 ```
-## Jenkins Server
+#### Docker Compose
+
 ```yaml
 version: '3.7'
 services:
@@ -68,14 +104,25 @@ services:
       - /usr/bin/docker:/usr/local/bin/docker
       - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
 ```
+
+Jenkins run image
+
 ```bash
 $ docker-compose -f jenkins.yml up -d
 ```
 
 ### Get password default Jenkins
+
 ```bash
 docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
 ```
+
+![arqi](./img/jenkins-start.png)
+
+We add our user data in Jenkins, soon to enter the console.
+
+![arqi](./img/jenkinks-user.png)
+
 
 ### Job Jenkins Pipeline
 
@@ -92,13 +139,39 @@ java -jar jenkins-cli.jar -s  ${JENKINS_URL} -auth  ${JENKINS_USER}:${JENKINS_PW
 java -jar jenkins-cli.jar -s  ${JENKINS_URL} -auth  ${JENKINS_USER}:${JENKINS_PWD}  create-job DEPLOY-API-CURRENCy-V2 < job-backup.xml
 ```
 
+Creating an image of the Jenkins instance, to have a backup of the configured VM.
+
+```bash
+gcloud beta compute machine-images create jenkins-server-backup --source-instance=jenkins-server --source-instance-zone=us-central1-a
+```
+
+![arqi](./img/vm-image.png)
+
+If we can eliminate the VM if we are not going to use.  :warning:
+
+```bash
+gcloud compute instances delete jenkins-server --zone=us-central1-a
+```
+
+Once the instance has been created correctly and importing the job or creating the Jenkins pipeline, 
+we are going to execute the pipeline with the steps for delivery to Cloud Run.
+
 ![jenkins](./img/jenkins.png)
+
+Credential creation with the GitHub account and the service account created in the 
+GCP IAM with the necessary permissions.
 
 ![credentials](./img/credentials.png)
 
+Pipeline parameters
+
 ![parameters](./img/parameters.png)
 
+Pipeline configuration with the reference to the Groovy that is in the repository of the artifact to be deployed.
+
 ![jenkins-pipeline](./img/jenkins-pipeline.png)
+
+:rocket: Deployment of the microservices and the steps that the pipeline has from the construction of the artifact to the testing with newman.
 
 ![execution-pipeline](./img/execution-pipeline.png)
 
@@ -184,6 +257,7 @@ curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a
 --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA'
 ```
 
+## References
 
 [Jenkins-CLI](https://wiki.jenkins.io/display/JENKINS/Jenkins+CLI)
 
