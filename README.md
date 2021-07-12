@@ -182,6 +182,11 @@ Pipeline configuration with the reference to the Groovy that is in the repositor
 
 ![log-jenkins](./img/log-jenkins.png)
 
+Finishing the steps of the pipeline :call_me_hand:, the result is the Microservice, 
+the API Documentation deployed in ***Cloud Run*** and the API testing with ***newman***.
+
+![Jenkins Server](./img/deploy-cloudrun.png)
+
 [Jenkins Server](http://jenkins-wala.duckdns.org/) :mag_right:
 
 ## Postman Running Testing
