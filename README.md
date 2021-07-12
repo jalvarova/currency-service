@@ -155,6 +155,8 @@ If we can eliminate the VM if we are not going to use.  :warning:
 gcloud compute instances delete jenkins-server --zone=us-central1-a
 ```
 
+### Pipeline 
+
 Once the instance has been created correctly and importing the job or creating the Jenkins pipeline, 
 we are going to execute the pipeline with the steps for delivery to Cloud Run.
 
@@ -162,7 +164,7 @@ we are going to execute the pipeline with the steps for delivery to Cloud Run.
 
 #### Credential creation
  * GitHub account
- * CP IAM service account, with the necessary permissions.
+ * GCP IAM service account, with the necessary permissions.
 
 ![credentials](./img/credentials.png)
 
@@ -189,11 +191,11 @@ Validate the collection of postman running all requests
 ![postman](./img/postman-test.png)
 
 
-#### Api Swagger
+#### API Swagger
 
-[Especificación de Open API del microservicio](./swagger/api.yml)
+[Microservice Open API specification](./swagger/api.yml)
 
-[Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
+[URI Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
  
 ## CLIENT HTTP
 
