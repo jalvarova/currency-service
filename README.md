@@ -73,7 +73,7 @@ $ sudo apt install openjdk-11-jre-headless -y
 
 Install Docker according to the Linux distribution of the VM.
 
-:file_folder: ./devops/install-docker.txt
+:file_folder: [docker install](./devops/install-docker.txt)
 
 #### Installing Docker compose
 
@@ -193,7 +193,7 @@ Validate the collection of postman running all requests
 
 #### API Swagger
 
-[Microservice Open API specification](./swagger/api.yml)
+:file_folder: [Microservice Open API specification](./swagger/api.yml)
 
 [URI Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
  
