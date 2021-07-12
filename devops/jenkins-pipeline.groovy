@@ -37,15 +37,16 @@ node {
     withCredentials([file(credentialsId: "service-account-gcp", variable: "COMPUTE_CREDENTIALS")]) {
 
         stage("Auth Login GCP") {
+            sh("gcloud auth activate-service-account ${env.ACCOUNT_EMAIL} --key-file ${COMPUTE_CREDENTIALS}")
+            sh("gcloud auth configure-docker gcr.io -q")
+            sh("docker-credential-gcloud list")
+            sh("docker login -u oauth2accesstoken -p \"\$(gcloud auth print-access-token)\"  https://gcr.io")
+
         }
 
         stage("Build & push Docker Image") {
             dir("checkout-directory/${env.SERVICE}") {
 
-                sh("gcloud auth activate-service-account ${env.ACCOUNT_EMAIL} --key-file ${COMPUTE_CREDENTIALS}")
-                sh("gcloud auth configure-docker gcr.io -q")
-                sh("docker-credential-gcloud list")
-                sh("docker login -u oauth2accesstoken -p \"\$(gcloud auth print-access-token)\"  https://gcr.io")
 
                 sh("docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t ${ARTIFACTID}:${VERSION}")
                 sh("docker images")
@@ -98,7 +99,7 @@ node {
 
     stage("Test implementation postman") {
         POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
-        sleep 30
+        sleep 60
         dir("checkout-directory") {
             sh "npm install -g newman"
             sh "newman run ${POSTMAN} -g api.postman_environment.json --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
