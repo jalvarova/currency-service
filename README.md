@@ -18,21 +18,21 @@ We have to create a project on Google Cloud Platform, we'll enable some services
 #### Create project in GCP
 
 ```bash
-gcloud auth login
-gcloud projects create ${PROJECT_ID}
-gcloud projects list
-gcloud config set project ${PROJECT_ID}
+$ gcloud auth login
+$ gcloud projects create ${PROJECT_ID}
+$ gcloud projects list
+$ gcloud config set project ${PROJECT_ID}
 ```
 
 #### Enabled services in GCP
 
 ```bash
-gcloud services list --available
-gcloud services enable compute.googleapis.com
-gcloud services enable run.googleapis.com
-gcloud services enable containerregistry.googleapis.com
-gcloud services enable artifactregistry.googleapis.com
-gcloud services enable storage-component.googleapis.com
+$ gcloud services list --available
+$ gcloud services enable compute.googleapis.com
+$ gcloud services enable run.googleapis.com
+$ gcloud services enable containerregistry.googleapis.com
+$ gcloud services enable artifactregistry.googleapis.com
+$ gcloud services enable storage-component.googleapis.com
 ```
 
 ## Provisioning Jenkins Server 
@@ -40,11 +40,11 @@ gcloud services enable storage-component.googleapis.com
 Now let's create the virtual machine on Compute Engine for provisioning a Jenkins Server.
 
 ```bash
-gcloud compute zones list
-gcloud compute disk-types list
-gcloud compute images list
+$ gcloud compute zones list
+$ gcloud compute disk-types list
+$ gcloud compute images list
 
-gcloud compute instances create jenkins-server 
+$ gcloud compute instances create jenkins-server 
     --zone=us-central1-a 
     --machine-type=e2-medium 
     --image-family=ubuntu-2004-lts  
@@ -119,7 +119,7 @@ $ docker-compose -f jenkins.yml up -d
 Once the image is created, get the default password in the Jenkins image
  
 ```bash
-docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
+$ docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
 ```
 
 ![arqi](./img/jenkins-start.png)
