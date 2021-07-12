@@ -162,7 +162,7 @@ we are going to execute the pipeline with the steps for delivery to Cloud Run.
 
 ![jenkins](./img/jenkins.png)
 
-#### Credential creation
+#### Credential creation :closed_lock_with_key:
  * GitHub account
  * GCP IAM service account, with the necessary permissions.
 
