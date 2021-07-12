@@ -94,6 +94,7 @@ $ sudo vim jenkins.yaml
 version: '3.7'
 services:
   jenkins:
+    restart: always
     image: javadevelop/jenkins-server
     privileged: true
     user: root
