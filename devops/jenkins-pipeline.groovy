@@ -47,7 +47,6 @@ node {
         stage("Build & push Docker Image") {
             dir("checkout-directory/${env.SERVICE}") {
 
-
                 sh("docker build --build-arg ARTIFACT_ID,ARTIFACT_VERSION,APPLICATION_PORT . -t ${ARTIFACTID}:${VERSION}")
                 sh("docker images")
                 sh("docker tag ${ARTIFACTID}:${VERSION} gcr.io/${env.PROJECT_ID}/${ARTIFACTID}:${VERSION}")
