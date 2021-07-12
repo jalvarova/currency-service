@@ -3,7 +3,7 @@ info:
   description: Servicio currency-exchange
   version: 1.0.0
   title: currency-exchange
-host: service-currency-exchange-wcyidxth5q-uc.a.run.app
+host: service-currency-exchange-xfrmmz5d4a-uc.a.run.app
 basePath: "/"
 tags:
   - name: currency-exchange

@@ -213,18 +213,15 @@ curl --location --request POST 'https://service-currency-exchange-xfrmmz5d4a-uc.
 #### HEALTH CHECK
 
 ```bash
-curl --location --request GET 'https://service-currency-exchange-xfrmmz5d4a-uc.a.run.app/health' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA'
+curl --location --request GET 'https://service-currency-exchange-xfrmmz5d4a-uc.a.run.app/health'
 ```
 
 
 #### METRICS
 
 ```bash
-curl --location --request GET 'https://service-currency-exchange-xfrmmz5d4a-uc.a.run.app/metrics' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MTc5MDQwNjMsImlhdCI6MTYxNzg4NjA2M30.EK9MtPmlYKkNuLlXwF-3ga58ndzAnvcqS8Zhiu7Pmi7QtVBEEvIhoVEtyXfaOrt2RLA-NTy6V-eD4OY0soCvpg'
+curl --location --request GET 'https://service-currency-exchange-xfrmmz5d4a-uc.a.run.app/metrics'
 ```
-
 
 #### APPLY CURRENCY EXCHANGE
 
