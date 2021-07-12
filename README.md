@@ -9,9 +9,9 @@ going through testing with newman and publishing the API contract with Open API.
 
 # Pre requirements
 
-* [Cloud SDK Install](https://cloud.google.com/sdk/docs/quickstart)
+* [Cloud SDK Install](https://cloud.google.com/sdk/docs/quickstart)  :mag_right:
 
-* [Gcloud Auth Login](https://cloud.google.com/sdk/gcloud/reference/auth/login)
+* [Gcloud Auth Login](https://cloud.google.com/sdk/gcloud/reference/auth/login)  :mag_right:
 
 We have to create a project on Google Cloud Platform, we'll enable some services to use in our example.
 
@@ -182,7 +182,7 @@ Pipeline configuration with the reference to the Groovy that is in the repositor
 
 ![log-jenkins](./img/log-jenkins.png)
 
-[Jenkins Server](http://jenkins-wala.duckdns.org/)
+[Jenkins Server](http://jenkins-wala.duckdns.org/) :mag_right:
 
 ## Postman Running Testing
 
@@ -195,7 +195,7 @@ Validate the collection of postman running all requests
 
 :file_folder: [Microservice Open API specification](./swagger/api.yml)
 
-[URI Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
+[URI Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app) :mag_right: 
  
 ## CLIENT HTTP
 
