@@ -317,16 +317,16 @@ docker rmi -f $(docker images 'currency-exchange' -a -q)
 Swagger is a project used to describe and document RESTful API, define http operations, 
 path, schemas, security, among others.
 
-[Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
+[Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app) :mag_right:
  
- 
+
 ## Postman Collection
 
 Postman collection of the root project: CURRENCY_EXCHANGE.postman_collection.json
 
 ![postman](../img/postman-test.png)
 
-### Next step :exclamation::exclamation::exclamation:
+### Next step :question:
 
 :ballot_box_with_check: Deploy Cloud Run Serveless
 
