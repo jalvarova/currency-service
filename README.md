@@ -282,3 +282,4 @@ curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a
 
 [VM Image](https://cloud.google.com/sdk/gcloud/reference/beta/compute/machine-images/create)
 
+[Swagger](https://swagger.io/specification/v2/)
