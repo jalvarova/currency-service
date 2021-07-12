@@ -99,7 +99,7 @@ node {
 
     stage("Test implementation postman") {
         POSTMAN = "CURRENCY_EXCHANGE.postman_collection.json"
-        sleep 60
+        sleep 30
         dir("checkout-directory") {
             sh "npm install -g newman"
             sh "newman run ${POSTMAN} -g api.postman_environment.json --reporters cli,junit --reporter-junit-export 'newman/report.xml'"
