@@ -40,7 +40,7 @@ node {
             sh("gcloud auth activate-service-account ${env.ACCOUNT_EMAIL} --key-file ${COMPUTE_CREDENTIALS}")
             sh("gcloud auth configure-docker gcr.io -q")
             sh("docker-credential-gcloud list")
-            sh("docker login -u oauth2accesstoken -p \"\$(gcloud auth print-access-token)\"  https://gcr.io")
+            //sh("docker login -u oauth2accesstoken -p \"\$(gcloud auth print-access-token)\"  https://gcr.io")
 
         }
 

@@ -275,6 +275,8 @@ curl --location --request GET 'https://service-currency-exchange-xfrmmz5d4a-uc.a
 
 [Jenkins-Pipeline](https://www.jenkins.io/doc/pipeline/tour/hello-world/#:~:text=Jenkins%20Pipeline%20(or%20simply%20%22Pipeline,continuous%20delivery%20pipelines%20into%20Jenkins.&text=The%20definition%20of%20a%20Jenkins,a%20project's%20source%20control%20repository. )
 
+[Docker Registry](https://cloud.google.com/container-registry/docs/support/deprecation-notices#gcloud-docker)
+
 [Create VM](https://cloud.google.com/sdk/gcloud/reference/compute/images/create)
 
 [VM-Instance](https://cloud.google.com/compute/docs/instances/create-start-instance)
