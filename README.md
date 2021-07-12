@@ -116,6 +116,8 @@ $ docker-compose -f jenkins.yml up -d
 
 ### Get password default Jenkins
 
+Once the image is created, get the default password in the Jenkins image
+ 
 ```bash
 docker exec -it jenkins_server sh -c "cat /var/jenkins_home/secrets/initialAdminPassword"
 ```
@@ -182,10 +184,14 @@ Pipeline configuration with the reference to the Groovy that is in the repositor
 
 ## Postman Running Testing
 
+Validate the collection of postman running all requests
+
 ![postman](./img/postman-test.png)
 
 
-### Api Swagger
+#### Api Swagger
+
+[Especificación de Open API del microservicio](./swagger/api.yml)
 
 [Swagger API](https://swagger-currency-exchange-wcyidxth5q-uc.a.run.app)
  
@@ -258,7 +264,13 @@ curl --location --request GET 'https://service-currency-exchange-wcyidxth5q-uc.a
 --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YWxhdm8iLCJleHAiOjE2MjQ4NjU5NjYsImlhdCI6MTYyNDg0Nzk2Nn0.SCeK957PRYHBD90KEz-YuTS8pf0l-8FRcDMDGe7Bh2b-NAjxNObjrdh3qgp2XxtLpIzD2BuLq2H6DqNmTPFKUA'
 ```
 
-## References
+### Next Step :question:
+
+ * Client Web with Angular
+ * Infrastructure as Code with Terraform
+ * Monitoring Application with Dynatrace
+ 
+### References
 
 [Jenkins-CLI](https://wiki.jenkins.io/display/JENKINS/Jenkins+CLI)
 
