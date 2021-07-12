@@ -1,6 +1,7 @@
-# Pipeline Jenkins and Deployment Serverless Cloud Run Part II
+# Pipeline Jenkins and Deployment Serverless Cloud Run - Part II
 
-In this part we will do the Jenkins server provisioning with Compunte Engine, and we'll build a pipeline to delivery the microservice in Cloud Run, 
+In this part we will do the Jenkins server provisioning with Compute Engine, 
+and we'll build a pipeline to delivery the microservice in Cloud Run, 
 going through testing with newman and publishing the API contract with Open API.
 
 ![arqhi](./img/arq.jpg)
@@ -10,7 +11,7 @@ going through testing with newman and publishing the API contract with Open API.
 
 * [Cloud SDK Install](https://cloud.google.com/sdk/docs/quickstart)
 
-* [Gcloud auth login](https://cloud.google.com/sdk/gcloud/reference/auth/login)
+* [Gcloud Auth Login](https://cloud.google.com/sdk/gcloud/reference/auth/login)
 
 We have to create a project on Google Cloud Platform, we'll enable some services to use in our example.
 
@@ -55,6 +56,7 @@ gcloud compute instances create jenkins-server
     --no-restart-on-failure  
     --maintenance-policy=terminate
 ```
+:heavy_check_mark: Verify virtual machine creation
 
 ![arqi](./img/vm-jenkins.png)
 
@@ -65,6 +67,7 @@ Install the following packages on the virtual machine that are necessary to star
 ```bash
 $ sudo apt-get update -y
 $ sudo apt-get install git -y && sudo apt-get install curl -y 
+$ sudo apt install openjdk-11-jre-headless -y
 ```
 ## Getting started Jenkins install :+1:
 
@@ -123,27 +126,24 @@ We add our user data in Jenkins, soon to enter the console.
 
 ![arqi](./img/jenkinks-user.png)
 
-
-### Job Jenkins Pipeline
+import job backup
 
 ```shell script
 # get jenkins-cli
-wget --no-check-certificate ${JENKINS_URL}/jnlpJars/jenkins-cli.jar
-# update so
-sudo apt-get update
-# install java
-sudo apt install openjdk-11-jre-headless -y
-# export pipeline 
-java -jar jenkins-cli.jar -s  ${JENKINS_URL} -auth  ${JENKINS_USER}:${JENKINS_PWD}  get-job DEPLOY-API-CURRENCY > job-backup.xml
+$ wget --no-check-certificate ${JENKINS_URL}/jnlpJars/jenkins-cli.jar
 # import pipeline 
-java -jar jenkins-cli.jar -s  ${JENKINS_URL} -auth  ${JENKINS_USER}:${JENKINS_PWD}  create-job DEPLOY-API-CURRENCy-V2 < job-backup.xml
+$ java -jar jenkins-cli.jar -s  ${JENKINS_URL} -auth  ${JENKINS_USER}:${JENKINS_PWD}  create-job DEPLOY-API-CURRENCy-V2 < job-backup.xml
+# export pipeline 
+$ java -jar jenkins-cli.jar -s  ${JENKINS_URL} -auth  ${JENKINS_USER}:${JENKINS_PWD}  get-job DEPLOY-API-CURRENCY > job-backup.xml
 ```
+### Additional :memo:
 
 Creating an image of the Jenkins instance, to have a backup of the configured VM.
 
 ```bash
 gcloud beta compute machine-images create jenkins-server-backup --source-instance=jenkins-server --source-instance-zone=us-central1-a
 ```
+:heavy_check_mark: Verify VM image
 
 ![arqi](./img/vm-image.png)
 
@@ -158,8 +158,9 @@ we are going to execute the pipeline with the steps for delivery to Cloud Run.
 
 ![jenkins](./img/jenkins.png)
 
-Credential creation with the GitHub account and the service account created in the 
-GCP IAM with the necessary permissions.
+#### Credential creation
+ * GitHub account
+ * CP IAM service account, with the necessary permissions.
 
 ![credentials](./img/credentials.png)
 

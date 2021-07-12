@@ -1,4 +1,4 @@
-# Building and Deployment Microservice Part I
+# Building and Deployment Microservice - Part I
 
 Spring Boot makes it easy to create decoupled applications and easy to configure.
 This helps us in the creation of stand-alone microservices, as we see in the following
