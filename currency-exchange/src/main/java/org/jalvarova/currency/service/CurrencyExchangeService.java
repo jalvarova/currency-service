@@ -33,7 +33,7 @@ public class CurrencyExchangeService implements ICurrencyExchangeService {
         String currencyDestination = dto.getCurrencyDestination().name();
 
         return Single.fromCallable(() -> currencyExchangeRepository.findByApplyCurrency(currencyOrigin, currencyDestination))
-                .subscribeOn(Schedulers.io())
+                //.subscribeOn(Schedulers.io())
                 .onErrorReturnItem(CurrencyExchange.instanceEmpty())
                 .map(CurrencyUtil::validateNullCurrency)
                 .map(x -> toApiApply.apply(x, dto.getAmount()));
@@ -45,7 +45,7 @@ public class CurrencyExchangeService implements ICurrencyExchangeService {
         String currencyDestination = dto.getCurrencyDestination().name();
 
         return Single.fromCallable(() -> currencyExchangeRepository.findByApplyCurrency(currencyOrigin, currencyDestination))
-                .subscribeOn(Schedulers.io())
+                //.subscribeOn(Schedulers.io())
                 .onErrorReturnItem(CurrencyExchange.instanceEmpty())
                 .map(CurrencyUtil::validateNullCurrency)
                 .map(x -> toUpdateAmount.apply(x, dto.getAmount()))
@@ -56,7 +56,7 @@ public class CurrencyExchangeService implements ICurrencyExchangeService {
     @Override
     public Single<List<CurrencyExchangeDto>> getAllCurrencyExchange() {
         return Single.just(currencyExchangeRepository.findAll())
-                .subscribeOn(Schedulers.io())
+                //.subscribeOn(Schedulers.io())
                 .map(CurrencyUtil::validateNullCollection)
                 .flatMapObservable(Observable::fromIterable)
                 .map(currencyExchange -> toApiList.apply(currencyExchange, codeNamesService.findAll()))
