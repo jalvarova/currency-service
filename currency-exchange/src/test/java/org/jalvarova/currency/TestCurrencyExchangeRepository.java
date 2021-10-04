@@ -63,6 +63,7 @@ class TestCurrencyExchangeRepository {
         CurrencyCode currencyUSD = CurrencyCode.USD;
         CurrencyCode currencyPEN = CurrencyCode.PEN;
 
+
         CurrencyExchange currencyExchange = currencyExchangeRepository.findByApplyCurrency(currencyUSD.name(), currencyPEN.name());
         Assert.notNull(currencyExchange);
         assertThat(currencyExchange.getCurrencyExchangeOrigin()).isEqualTo(currencyUSD.name());

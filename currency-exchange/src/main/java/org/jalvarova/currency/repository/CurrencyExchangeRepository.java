@@ -10,12 +10,16 @@ import java.util.List;
 @Repository
 public interface CurrencyExchangeRepository extends CrudRepository<CurrencyExchange, Long> {
 
-    @Query(value = "FROM CurrencyExchange e WHERE" +
-            " e.currencyExchangeOrigin = :exchangeOrigin AND" +
-            " e.currencyExchangeDestination = :exchangeDestination")
+    /**
+     * Crear con @Query una función correcta de base de datos que con un Origen y destino
+     * pueda obtener el tió de cambio
+     */
     CurrencyExchange findByApplyCurrency(String exchangeOrigin, String exchangeDestination);
 
-    @Query("FROM CurrencyExchange cn")
+    /**
+     * Crear con @Query una función correcta de base de datos 
+     * pueda obtener todo el listado de tipo de cambio
+     */
     List<CurrencyExchange> findAll();
 
 }
