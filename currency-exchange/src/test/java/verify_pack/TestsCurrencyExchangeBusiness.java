@@ -1,12 +1,12 @@
 package verify_pack;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jalvarova.currency.dto.CurrencyExchangeDto;
-import org.jalvarova.currency.dto.enums.CurrencyCode;
-import org.jalvarova.currency.repository.CurrencyExchangeRepository;
-import org.jalvarova.currency.repository.entity.CurrencyExchange;
-import org.jalvarova.currency.service.CurrencyExchangeService;
-import org.jalvarova.currency.service.ICurrencyCodeNamesService;
+import org.bcp.challenge.dto.CurrencyExchangeDto;
+import org.bcp.challenge.dto.enums.CurrencyCode;
+import org.bcp.challenge.repository.CurrencyExchangeRepository;
+import org.bcp.challenge.repository.entity.CurrencyExchange;
+import org.bcp.challenge.service.CurrencyExchangeService;
+import org.bcp.challenge.service.ICurrencyCodeNamesService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
