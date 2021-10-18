@@ -1,21 +1,30 @@
 {
-  "readOnlyFiles": ["pom.xml"],
+  "readOnlyFiles": [
+    "pom.xml",
+    ".mvn/**",
+    "mvnw",
+    "mvnw.cmd",
+    "README.md",
+    "src/main/java/org/bcp/challenge/repository/entity/CurrencyCodeNames.java",
+    "src/main/java/org/bcp/challenge/repository/entity/User.java",
+    "src/main/java/org/bcp/challenge/repository/CurrencyCodeNamesRepository.java",
+    "src/main/java/org/bcp/challenge/repository/CurrencyCodeNamesRepository.java",
+    "src/main/java/org/bcp/challenge/repository/UserRepository.java",
+    "src/main/java/org/bcp/challenge/service/CurrencyCodeNamesService.java",
+    "src/main/java/org/bcp/challenge/service/ICurrencyCodeNamesService.java",
+    "src/main/java/org/bcp/challenge/service/JwtUserDetailsService.java",
+    "src/main/java/org/bcp/challenge/util/**",
+    "src/main/java/org/bcp/challenge/dto/**",
+    "src/main/java/org/bcp/challenge/configuration/**",
+    "src/main/java/org/bcp/challenge/exceptions/**",
+    "src/main/java/org/bcp/challenge/controller/UserController.java"
+  ],
   "verification": {
-    "testNamePatterns": [".*verify_pack.*"],
+    "testNamePatterns": [
+      ".*verify_pack.*"
+    ],
     "pathPatterns": [
-      "**src/test/**/verify_pack**",
-      "**/src/main/java/**/repository/entity/CurrencyCodeNames.java",
-      "**/src/main/java/**/repository/entity/User.java",
-      "**/src/main/java/**/repository/CurrencyCodeNamesRepository.java",
-      "**/src/main/java/**/repository/CurrencyCodeNamesRepository.java",
-      "**/src/main/java/**/repository/UserRepository.java",
-      "**/src/main/java/**/service/CurrencyCodeNamesService.java",
-      "**/src/main/java/**/service/ICurrencyCodeNamesService.java",
-      "**/src/main/java/**/service/JwtUserDetailsService.java",
-      "**/src/main/java/**/util/**",
-      "**/src/main/java/**/configuration/**",
-      "**/src/main/java/**/exceptions/**",
-      "**/src/main/java/**/controller/UserController.java"
+      "**src/test/**/verify_pack**"
     ]
   }
 }

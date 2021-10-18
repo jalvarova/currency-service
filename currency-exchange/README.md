@@ -32,7 +32,7 @@ File Paths:
 
 :file_folder: /src/main/java/org/bcp/challenge/controller
 
-:file_folder: /src/main/java(org/bcp/challenge/repository
+:file_folder: /src/main/java/org/bcp/challenge/repository
 
 :file_folder: /src/main/java/org/bcp/challenge/service
 
