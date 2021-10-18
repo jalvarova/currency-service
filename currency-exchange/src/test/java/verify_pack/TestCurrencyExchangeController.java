@@ -1,4 +1,4 @@
-package org.jalvarova.currency;
+package verify_pack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reactivex.Observable;
