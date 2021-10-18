@@ -1,9 +1,9 @@
 package verify_pack;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jalvarova.currency.dto.enums.CurrencyCode;
-import org.jalvarova.currency.repository.CurrencyExchangeRepository;
-import org.jalvarova.currency.repository.entity.CurrencyExchange;
+import org.bcp.challenge.dto.enums.CurrencyCode;
+import org.bcp.challenge.repository.CurrencyExchangeRepository;
+import org.bcp.challenge.repository.entity.CurrencyExchange;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
