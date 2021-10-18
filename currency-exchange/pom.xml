@@ -14,7 +14,7 @@
     <name>currency-exchange</name>
     <description>API para aplicar un tipo de cambio a un monto.</description>
     <properties>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>

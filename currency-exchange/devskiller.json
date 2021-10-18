@@ -1,7 +1,21 @@
 {
-  "readOnlyFiles" : ["pom.xml"],
-  "verification" : {
-    "testNamePatterns" : [".*verify_pack.*"],
-    "pathPatterns" : ["**src/test/**"]
+  "readOnlyFiles": ["pom.xml"],
+  "verification": {
+    "testNamePatterns": [".*verify_pack.*"],
+    "pathPatterns": [
+      "**src/test/**/verify_pack**",
+      "**/src/main/java/**/repository/entity/CurrencyCodeNames.java",
+      "**/src/main/java/**/repository/entity/User.java",
+      "**/src/main/java/**/repository/CurrencyCodeNamesRepository.java",
+      "**/src/main/java/**/repository/CurrencyCodeNamesRepository.java",
+      "**/src/main/java/**/repository/UserRepository.java",
+      "**/src/main/java/**/service/CurrencyCodeNamesService.java",
+      "**/src/main/java/**/service/ICurrencyCodeNamesService.java",
+      "**/src/main/java/**/service/JwtUserDetailsService.java",
+      "**/src/main/java/**/util/**",
+      "**/src/main/java/**/configuration/**",
+      "**/src/main/java/**/exceptions/**",
+      "**/src/main/java/**/controller/UserController.java"
+    ]
   }
 }
