@@ -24,7 +24,7 @@
       ".*verify_pack.*"
     ],
     "pathPatterns": [
-      "**src/test/**/verify_pack**"
+      "**src/test/**/verify_packs**"
     ]
   }
 }

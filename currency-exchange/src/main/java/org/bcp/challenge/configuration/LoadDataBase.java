@@ -20,52 +20,53 @@ import java.util.List;
 @Slf4j
 class LoadDataBase {
 
-    private static final List<CurrencyExchange> currencyExchanges = new ArrayList<>();
+    private static final List<CurrencyExchange> CURRENCY_EXCHANGES = new ArrayList<>();
 
-    private static final List<CurrencyCodeNames> currencyCodeNames = new ArrayList<>();
+    private static final List<CurrencyCodeNames> CURRENCY_CODE_NAMES = new ArrayList<>();
 
     static {
-        currencyCodeNames.add(CurrencyCodeNames
+
+        CURRENCY_CODE_NAMES.add(CurrencyCodeNames
                 .builder()
                 .currencyCode("USD")
                 .currencyName("Dólar estadounidense")
                 .state(Boolean.TRUE)
                 .build());
 
-        currencyCodeNames.add(CurrencyCodeNames
+        CURRENCY_CODE_NAMES.add(CurrencyCodeNames
                 .builder()
                 .currencyCode("PEN")
                 .currencyName("Nuevo sol")
                 .state(Boolean.TRUE)
                 .build());
 
-        currencyCodeNames.add(CurrencyCodeNames
+        CURRENCY_CODE_NAMES.add(CurrencyCodeNames
                 .builder()
                 .currencyCode("JPY")
                 .currencyName("Yen japonés")
                 .state(Boolean.TRUE)
                 .build());
 
-        currencyCodeNames.add(CurrencyCodeNames
+        CURRENCY_CODE_NAMES.add(CurrencyCodeNames
                 .builder()
                 .currencyCode("EUR")
                 .currencyName("Euro")
                 .state(Boolean.TRUE)
                 .build());
 
-        currencyExchanges.add(new CurrencyExchange(BigDecimal.valueOf(3.39608), "USD", "PEN"));
-        currencyExchanges.add(new CurrencyExchange(BigDecimal.valueOf(0.294475), "PEN", "USD"));
-        currencyExchanges.add(new CurrencyExchange(BigDecimal.valueOf(3.72884), "EUR", "PEN"));
-        currencyExchanges.add(new CurrencyExchange(BigDecimal.valueOf(0.268180), "PEN", "EUR"));
-        currencyExchanges.add(new CurrencyExchange(BigDecimal.valueOf(31.5680), "JPY", "PEN"));
-        currencyExchanges.add(new CurrencyExchange(BigDecimal.valueOf(0.0316777), "PEN", "JPY"));
+        CURRENCY_EXCHANGES.add(new CurrencyExchange(BigDecimal.valueOf(3.39608), "USD", "PEN"));
+        CURRENCY_EXCHANGES.add(new CurrencyExchange(BigDecimal.valueOf(0.294475), "PEN", "USD"));
+        CURRENCY_EXCHANGES.add(new CurrencyExchange(BigDecimal.valueOf(3.72884), "EUR", "PEN"));
+        CURRENCY_EXCHANGES.add(new CurrencyExchange(BigDecimal.valueOf(0.268180), "PEN", "EUR"));
+        CURRENCY_EXCHANGES.add(new CurrencyExchange(BigDecimal.valueOf(31.5680), "JPY", "PEN"));
+        CURRENCY_EXCHANGES.add(new CurrencyExchange(BigDecimal.valueOf(0.0316777), "PEN", "JPY"));
     }
 
     @Bean
     CommandLineRunner initDatabase(CurrencyCodeNamesRepository codeNamesRepository, CurrencyExchangeRepository repository, UserRepository userRepository) {
         return args -> {
-            log.info("Preloading  Currency Names " + codeNamesRepository.saveAll(currencyCodeNames));
-            log.info("Preloading  Currency Exchange " + repository.saveAll(currencyExchanges));
+            log.info("Preloading  Currency Names " + codeNamesRepository.saveAll(CURRENCY_CODE_NAMES));
+            log.info("Preloading  Currency Exchange " + repository.saveAll(CURRENCY_EXCHANGES));
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             log.info("User Preloading" + userRepository.save(new User("walavo", encoder.encode("12334"), true)));
         };

@@ -89,7 +89,7 @@ public class HandlerErrorControllerAdvice {
     @ResponseBody
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<ErrorHandler> BadCredentials(BadCredentialsException ex, HttpServletRequest req) {
+    public ResponseEntity<ErrorHandler> badCredentials(BadCredentialsException ex, HttpServletRequest req) {
         ErrorHandler errorHandler = new ErrorHandler();
         errorHandler.setError("Unauthorized");
         errorHandler.setMessage(ex.getMessage());

@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthorizationFilter jwtAuthorizationFilter;
 
-    private final static String[] arrayHeaders = new String[]{
+    private final static String[] ANY_HEADERS = new String[]{
             "Access-Control-Allow-Origin", "Origin",
             "Content-Type", "Accept", "responseType", "Authorization"
     };
@@ -68,7 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/authentication", "/health", "/info", "/metrics", "prometheus", "/actuator/**", "/h2-console/**");
+                .antMatchers("/authentication", "/health", "/info", "/metrics",
+                    "prometheus", "/actuator/**", "/h2-console/**");
     }
 
     @Bean
@@ -85,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setMaxAge(Duration.ofSeconds(3600));
         configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
-        configuration.setAllowedHeaders(Arrays.asList(arrayHeaders));
+        configuration.setAllowedHeaders(Arrays.asList(ANY_HEADERS));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

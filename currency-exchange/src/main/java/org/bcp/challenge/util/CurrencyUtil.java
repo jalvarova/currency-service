@@ -25,7 +25,7 @@ public final class CurrencyUtil {
     }
 
     public static List<CurrencyExchange> validateNullCollection(List<CurrencyExchange> currencyExchangeList) {
-        if (currencyExchangeList.size() == 0) {
+        if (currencyExchangeList.isEmpty()) {
             throw new CurrencyExchangeNotFound("002");
         }
         return currencyExchangeList;
