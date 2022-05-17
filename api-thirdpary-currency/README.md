@@ -11,9 +11,13 @@
 **Previous knowledge**
 
   :radio_button: Javascript
+
   :radio_button: Express JS
+
   :radio_button: Docker
+
   :radio_button: RESTful API
+
   :radio_button: Postman
 
 ### HTTP Operation that exposes our API
@@ -44,7 +48,12 @@ $ docker build . -t currency-api:${ARTIFACT_VERSION}
 $ docker run -d --name currency-api-local -p 3000:3000 currency-api:${ARTIFACT_VERSION}
 ```
 
-### Local expose 
+### Local Build Expose 
+
+```sh
+npm install
+node boot-application.js
+```
 
 ```sh
 127.0.0.1:3000
