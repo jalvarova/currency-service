@@ -25,6 +25,7 @@ example:
 ```text
 .
 ├─ mock-server
+├─── .dockerignore
 ├─── .env
 ├─── boot-application.js
 ├─── product-repository.js
@@ -88,6 +89,8 @@ how to containerize our REST API quickly and easily.
 
 ## References
 
-| Concepts                                                 |              Approved            |
-|----------------------------------------------------------|----------------------------------|
-| [FakerJs](https://fakerjs.dev/api/commerce.html#product) |          :heavy_check_mark:      |
+| Concepts                                                           |              Approved            |
+|--------------------------------------------------------------------|----------------------------------|
+| [FakerJs](https://fakerjs.dev/api/commerce.html#product)           |          :heavy_check_mark:      |
+| [Nodejs](https://nodejs.org/en/docs/guides/getting-started-guide/) |          :heavy_check_mark:      |
+| [ExpressJs](https://www.npmjs.com/package/express)                 |          :heavy_check_mark:      |
