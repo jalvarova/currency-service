@@ -250,8 +250,8 @@ public class CurrencyExchangeController {
 
 # Container Microservices 
 
-Docker es una perfecta combinacion para poder nuestro microservicios y distribuir nuestras API en entornos Cloud, 
-On-premise o probar localmente nuestros microsercios.  
+Docker is a perfect combination to power our microservices and distribute our APIs in Cloud environments,
+On-premise or try our microservices locally.
 
 ## Docker File Java
 ```dockerfile

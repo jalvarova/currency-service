@@ -8,7 +8,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate": "node ./genators.js > ./products.json",
+    "generate": "node product-repository.js > ./products.json",
     "server": "json-server --watch ./products.json"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^6.3.1"
   }
 }
