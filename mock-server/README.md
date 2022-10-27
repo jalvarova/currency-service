@@ -58,7 +58,7 @@ COPY package*.json ./
 USER node
 RUN npm install
 COPY --chown=node:node . .
-EXPOSE 8080
+EXPOSE 3000
 CMD [ "node", "boot-application.js" ]
 ```
 
@@ -67,7 +67,7 @@ CMD [ "node", "boot-application.js" ]
 $ docker login
 $ docker build . -t product-management:${ARTIFACT_VERSION}
 $ docker images
-$ docker run -d --name product-management-local -p 8080:8080 product-management:${ARTIFACT_VERSION}
+$ docker run -d --name product-management-local -p 3000:3000 product-management:${ARTIFACT_VERSION}
 $ docker ps
 $ docker tag product-management gcr.io/${PROJECT_ID}/product-management:${ARTIFACT_VERSION}
 ```
