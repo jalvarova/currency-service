@@ -23,7 +23,7 @@ import java.util.Objects;
 
 @Slf4j
 @ExtendWith(SpringExtension.class)
-class CurrencyExchangeApplicationTests {
+class TestsCurrencyExchangeBusiness {
 
     @InjectMocks
     private CurrencyExchangeService currencyExchangeService;

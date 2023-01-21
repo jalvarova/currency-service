@@ -17,4 +17,5 @@ public interface CurrencyExchangeRepository extends CrudRepository<CurrencyExcha
 
     @Query("FROM CurrencyExchange cn")
     List<CurrencyExchange> findAll();
+
 }
